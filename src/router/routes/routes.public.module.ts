@@ -1,11 +1,13 @@
 import { Module } from "@nestjs/common";
-import { GithubModule } from "src/module/github/github.module";
+import { PaginationModule } from "src/common/pagination/pagination.module";
+import { GithubPubliController } from "src/modules/github/controllers/github.public.controller";
+import { GithubModule } from "src/modules/github/github.module";
 
 
 @Module({
-    controllers: [],
+    controllers: [GithubPubliController],
     providers: [],
     exports: [],
-    imports: [GithubModule]
+    imports: [GithubModule, PaginationModule]
 })
 export class RoutesPublicModule {}

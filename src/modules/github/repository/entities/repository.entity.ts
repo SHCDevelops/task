@@ -12,10 +12,10 @@ export class RepositoryEntity extends DatabaseEntityAbstract {
 
     @DatabaseProp({
         required: true,
-        index: true
+        index: true,
     })
     id: number;
-
+    
     @DatabaseProp({
         required: true
     })

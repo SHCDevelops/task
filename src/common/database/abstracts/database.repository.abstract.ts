@@ -1,4 +1,4 @@
-import { IDatabaseCreateManyOptions, IDatabaseCreateOptions, IDatabaseDocument, IDatabaseFindAllOptions, IDatabaseOptions } from "../interfaces/database.interface";
+import { IDatabaseCreateManyOptions, IDatabaseCreateOptions, IDatabaseDocument, IDatabaseFindAllOptions, IDatabaseGetTotalOptions, IDatabaseOptions } from "../interfaces/database.interface";
 import { DatabaseEntityAbstract } from "./database.entity.abstract";
 import { Model, PopulateOptions } from 'mongoose';
 import MongoDB from 'mongodb';
@@ -30,7 +30,13 @@ export abstract class DatabaseRepositoryAbstract<
             repository.select(options.select);
         }
 
-        // TODO: Pagination
+        if (options?.paging) {
+            repository.limit(options.paging.limit).skip(options.paging.offset);
+        }
+
+        if (options?.order) {
+            repository.sort(options.order);
+        }
 
         if (options?.join) {
             repository.populate(
@@ -46,7 +52,7 @@ export abstract class DatabaseRepositoryAbstract<
             repository.session(options.session);
         }
 
-        const results = await repository.exec();
+        const results = await repository.exec(); 
 
         return results;
     }
@@ -111,6 +117,31 @@ export abstract class DatabaseRepositoryAbstract<
         const result = await repository.exec();
 
         return result;
+    }
+
+    async getTotal(
+        find?: Record<string, any>,
+        options?: IDatabaseGetTotalOptions
+    ): Promise<number> {
+        const repository = this._repository.countDocuments(
+            find
+        );
+
+        if (options?.join) {
+            repository.populate(
+                (typeof options.join === 'boolean' && options.join
+                    ? this._join
+                    : options.join) as
+                    | PopulateOptions
+                    | (string | PopulateOptions)[]
+            );
+        }
+
+        if (options?.session) {
+            repository.session(options.session);
+        }
+
+        return repository;
     }
 
     async create<T extends DatabaseEntityAbstract>(

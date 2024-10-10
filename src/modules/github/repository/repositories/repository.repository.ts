@@ -18,7 +18,7 @@ export class RepositoryRepository extends DatabaseRepositoryAbstract<
             {
                 path: 'owner',
                 localField: 'owner',
-                foreignField: '_id',
+                foreignField: 'id',
                 model: OwnerEntity.name,
                 justOne: true
             }

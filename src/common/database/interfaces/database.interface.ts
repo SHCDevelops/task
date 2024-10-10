@@ -1,4 +1,5 @@
-import { ClientSession, PopulateOptions } from 'mongoose';
+import { ClientSession, Document, PopulateOptions } from 'mongoose';
+import { IPaginationOrder } from 'src/common/pagination/interfaces/pagination.interface';
 
 export type IDatabaseDocument<T> = T & Document;
 
@@ -9,9 +10,21 @@ export interface IDatabaseOptions {
     session?: ClientSession;
 }
 
+export interface IDatabaseFindAllPagingOptions {
+    limit: number;
+    offset: number;
+}
+
+export interface IDatabaseFindAllOptions extends IDatabaseOptions {
+    paging: IDatabaseFindAllPagingOptions;
+    order: IPaginationOrder;
+}
+
+export type IDatabaseGetTotalOptions = Omit<IDatabaseOptions, 'select'>;
+
 export type IDatabaseCreateOptions = Pick<IDatabaseOptions, 'session'>;
 export type IDatabaseCreateManyOptions = Pick<IDatabaseOptions, 'session'>;
 
-export interface IDatabaseFindAllOptions extends IDatabaseOptions {
-    // TODO: Pagination
+export interface IDatabaseQueryContainOptions {
+    fullWord: boolean;
 }

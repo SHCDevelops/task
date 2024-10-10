@@ -5,6 +5,8 @@ import configs from "src/configs";
 import { DATABASE_CONNECTION_NAME } from "./database/constants/database.constant";
 import { DatabaseModule } from "./database/database.module";
 import { DatabaseService } from "./database/services/database.service";
+import { RequestModule } from "./request/request.module";
+import { PaginationModule } from "./pagination/pagination.module";
 
 
 @Module({
@@ -27,7 +29,10 @@ import { DatabaseService } from "./database/services/database.service";
             inject: [DatabaseService],
             useFactory: (databaseService: DatabaseService) =>
                 databaseService.createOptions(),
-        })
+        }),
+
+        RequestModule.forRoot(),
+        PaginationModule.forRoot()
     ],
 })
 export class CommonModule {}
