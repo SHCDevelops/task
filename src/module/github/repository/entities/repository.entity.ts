@@ -37,7 +37,7 @@ export class RepositoryEntity extends DatabaseEntityAbstract {
         type: Number,
         nullable: true
     })
-    owner?: number | null;
+    owner?: OwnerEntity | number | null;
 
     @DatabaseProp({
         required: true
@@ -118,7 +118,7 @@ export class RepositoryEntity extends DatabaseEntityAbstract {
     open_issues_count: number;
 
     @DatabaseProp({
-        required: true
+        required: false
     })
     master_branch: string;
 
@@ -413,38 +413,38 @@ export class RepositoryEntity extends DatabaseEntityAbstract {
     license?: LicenseSimpleEntity | null;
 
     @DatabaseProp({
-        required: true,
+        required: false,
         type: PermissionsEntity
     })
     permissions: PermissionsEntity;
 
     @DatabaseProp({
-        required: true
+        required: false
     })
     temp_clone_token: string;
 
     @DatabaseProp({
-        required: true
+        required: false
     })
     allow_merge_commit: boolean;
 
     @DatabaseProp({
-        required: true
+        required: false
     })
     allow_squash_merge: boolean;
 
     @DatabaseProp({
-        required: true
+        required: false
     })
     allow_rebase_merge: boolean;
 
     @DatabaseProp({
-        required: true
+        required: false
     })
     allow_auto_merge: boolean;
 
     @DatabaseProp({
-        required: true
+        required: false
     })
     delete_branch_on_merge: boolean;
 

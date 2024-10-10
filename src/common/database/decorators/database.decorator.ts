@@ -29,3 +29,14 @@ export function DatabaseModel(
 ): ParameterDecorator {
     return InjectModel(entity, connectionName ?? DATABASE_CONNECTION_NAME);
 }
+
+export function DatabaseQueryIn<T = string>(
+    field: string,
+    values: T[]
+): Record<string, any> {
+    return {
+        [field]: {
+            $in: values,
+        },
+    };
+}

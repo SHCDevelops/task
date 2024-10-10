@@ -32,7 +32,7 @@ export class LicenseSimpleEntity extends DatabaseEntityAbstract {
     node_id: string;
 
     @DatabaseProp({
-        required: true
+        required: false
     })
     html_url: string;
 }
